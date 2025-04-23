@@ -15,7 +15,7 @@ public class DatabaseConnection {
 
     public static void main(String[] args) {
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/rss", "root", "bigbro");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/rss", "root", "smtrd100");
             System.out.println("✅ Connected to the database.");
 
 
