@@ -85,20 +85,90 @@ public class RegisterFrame extends JFrame {
 
     private void handleRegistration(String username, String email, String password,
                                     String phone, String role) {
-        boolean success = MainController.userController.registerUser(
-                username, email, password, phone, role
-        );
 
-        if (success) {
+
+        //Check validations before registration
+        if (username == null || username.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this,
-                    "✅ Registered successfully! You can now log in.",
-                    "Success",
-                    JOptionPane.INFORMATION_MESSAGE);
-            new LoginFrame();
-            dispose();
-        } else {
+                    "Username cannot be empty!",
+                    "Registration Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (email == null || email.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this,
-                    "❌ Registration failed. Email might already exist.",
+                    "Email cannot be empty!",
+                    "Registration Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        if (!email.matches(emailRegex)) {
+            JOptionPane.showMessageDialog(this,
+                    "Invalid email format!",
+                    "Registration Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (password == null || password.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Password cannot be empty!",
+                    "Registration Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (phone == null || phone.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Phone number cannot be empty!",
+                    "Registration Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        else {
+            //String phoneRegex = "^[+0]\\d{9}$";
+            if (phone.length()<7 ){
+                JOptionPane.showMessageDialog(this,
+                        "Phone number is not valid. Phone must be in this format 0819123123!",
+                        "Registration Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        if (role == null || role.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Role must be selected!",
+                    "Registration Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            boolean success = MainController.userController.registerUser(
+                    username, email, password, phone, role
+            );
+
+
+            if (success) {
+                JOptionPane.showMessageDialog(this,
+                        "✅ Registered successfully! You can now log in.",
+                        "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
+                new LoginFrame();
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "❌ Registration failed. Email might already exist.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(this,
+                    "❌ Fatal error occured: "+ ex.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }

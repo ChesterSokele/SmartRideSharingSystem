@@ -29,13 +29,18 @@ public class LoginFrame extends JFrame {
             String email = emailField.getText();
             String password = new String(passwordField.getPassword());
 
-            User user = MainController.userController.loginUser(email, password);
-            if (user != null) {
-                JOptionPane.showMessageDialog(this, "Login successful!");
-                new MainFrame(user);
-                dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "Invalid credentials!");
+            try{
+                User user = MainController.userController.loginUser(email, password);
+                if (user != null) {
+                    JOptionPane.showMessageDialog(this, "Login successful!");
+                    new MainFrame(user);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Invalid credentials!");
+                }
+            }
+            catch (Exception ex){
+                JOptionPane.showMessageDialog(this, "Invalid credentials! "+ ex.getMessage());
             }
         });
 

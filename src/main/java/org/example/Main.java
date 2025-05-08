@@ -1,6 +1,10 @@
 // Main.java
 package org.example;
 
+import controller.BookingController;
+import controller.MainController;
+import controller.RideController;
+import controller.UserController;
 import view.LoginFrame;
 import javax.swing.*;
 

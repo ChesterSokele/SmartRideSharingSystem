@@ -20,6 +20,14 @@ public class UserController {
     }
 
     public User loginUser(String email, String password) {
+        if (email == null || email.trim().isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be empty.");
+        }
+
+        if (password == null || password.trim().isEmpty()) {
+            throw new IllegalArgumentException("Password cannot be empty.");
+        }
+
         String query = "SELECT * FROM Users WHERE email = ? AND password = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, email);
